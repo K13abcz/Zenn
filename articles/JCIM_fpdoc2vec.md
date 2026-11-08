@@ -2,7 +2,7 @@
 title: "🧪 論文の説明文を「部分構造の埋め込み」に変える:Fp Doc2Vecで未知分子の役割を予測する"
 emoji: "🧪"
 type: "tech"
-topics: ["機械学習", "論文紹介", "chemoinformatics", "自然言語処理", "SHAP"]
+topics: ["機械学習", "論文紹介", "chemoinformatics", "自然言語処理"]
 published: false
 ---
 
@@ -10,7 +10,7 @@ published: false
 この記事は、横浜国立大学 後藤研究室(poclab)の研究成果を紹介する **poclabリサーチハイライト** の記事です。
 :::
 
-こんにちは、横浜国立大学 後藤研究室の小出です。
+こんにちは、横浜国立大学 五東研究室の小出です。
 
 poclabリサーチハイライトでは、私たちの研究室から出た論文を、できるだけ噛み砕いて紹介していきます。今回は、Journal of Chemical Information and Modeling (JCIM) に掲載された、**化合物のデータベース上の説明文(テキスト)と部分構造を組み合わせて、未知の化合物の「化学的な役割」を予測する**研究を紹介します。
 
