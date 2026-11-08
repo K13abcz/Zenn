@@ -12,9 +12,9 @@ published: false
 
 [POCLabリサーチハイライト](https://zenn.dev/p/poclab_techblog/lists/wy2nxzk6sg)では、横浜国立大学 五東研究室[POCLab](https://poclab-web.github.io/homepage/)の研究成果を紹介しております。
 
-今回の第3回目の記事では、[Journal of Chemical Information and Modeling (JCIM)](https://pubs.acs.org/jcisd8/article/doi/10.1021/acs.jcim.6c01643/5462727/Predicting-Chemical-Roles-from-Database) に掲載された、**データベース上の化合物の説明文と部分構造を組み合わせて、未知の化合物の「化学的な役割」を予測する**研究を紹介します。
+今回の第3回目の記事では、Journal of Chemical Information and Modeling (JCIM)に掲載された、**データベース上の化合物の説明文と部分構造を組み合わせて、化合物の「化学的な役割」を予測する**研究を紹介します。
 
-![](images/jcim_fpdoc2vec/Graphical_Abstract.png)
+![](/images/jcim_fpdoc2vec/Graphical_Abstract.png)
 *図1:本研究の概要(Graphical Abstract) Reprinted with permission from [J. Chem. Inf. Model. 2026, DOI: 10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643). © 2026 American Chemical Society.*
 
 コードとデータは [GitHub](https://github.com/poclab-web/FpDoc2vec) と [Zenodo](https://doi.org/10.5281/zenodo.20064101) で公開しています。
@@ -58,7 +58,7 @@ published: false
 2. その化合物がもつ**部分構造をタグ**にして、Doc2Vecで学習する(部分構造ごとの埋め込みを取得する)
 3. **化合物に含まれる部分構造の埋め込みの総和**で、分子の埋め込み表現を表現する
 
-![](images/jcim_fpdoc2vec/fpdoc2vec.png)
+![](/images/jcim_fpdoc2vec/fpdoc2vec.png)
 *図2:Fp Doc2Vec手法の概念図。 Reprinted with permission from [J. Chem. Inf. Model. 2026, DOI: 10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643). © 2026 American Chemical Society.*
 
 この手法の利点としては3点あると考えています。
