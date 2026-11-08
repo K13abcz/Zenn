@@ -3,7 +3,7 @@ title: "化合物の説明文を部分構造に結びつけて役割予測を行
 emoji: "🤖"
 type: "idea"
 topics: ["poclabリサーチハイライト", "論文紹介", "chemoinformatics", "機械学習", "自然言語処理"]
-published: false
+published: true
 ---
 
 ## 0.  はじめに
