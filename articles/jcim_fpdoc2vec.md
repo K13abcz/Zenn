@@ -92,7 +92,7 @@ published: false
 
 予測の根拠を解釈するため、Fp Doc2VecとECFPのそれぞれについて、SHAPを用いて各部分構造が予測にどの程度寄与したのかを算出しました。さらに、その寄与の大きさを化合物の構造式上に色で示し、両者を比較しました。
 
-結果、ケンフェロール(抗酸化剤)やニトロフラゾン(抗菌剤)では、FpDoc2vecの解釈のみが先行研究の知見[^2^3]と一致する傾向が確認できました。
+結果、ケンフェロール(抗酸化剤)やニトロフラゾン(抗菌剤)では、FpDoc2vecの解釈のみが先行研究の知見[^2][^3]と一致する傾向が確認できました。
 
 ![](/images/jcim_fpdoc2vec/shap.png)
 *図4:SHAP値を構造式(ニトロフラゾン)に反映した例(左:Fp Doc2Vec、右:ECFP)。 Reprinted with permission from [J. Chem. Inf. Model. 2026, DOI: 10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643). © 2026 American Chemical Society.*
