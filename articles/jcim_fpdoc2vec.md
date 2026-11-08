@@ -21,7 +21,7 @@ published: false
 
 ## 1.  五東先生からのコメント
 
-![](/images/jcim_fpdoc2vec/gotoh.png =200x)
+![](/images/jcim_fpdoc2vec/gotoh.png =150x)
 今回の研究は、2024年に松元君と発表した研究を、さらに発展させたものです。
 
 もともとの研究は、「化学の論文には膨大な情報が蓄積されているのに、文章そのものを化合物の解析や予測にもっと活用できないだろうか？」という疑問から始まりました。ケモインフォマティクスでは、化学構造を数値化して解析することが一般的ですが、論文やデータベースに書かれた文章にも、化合物に関する多くの知識が含まれています。
@@ -49,11 +49,11 @@ published: false
 
 ただ、この段階では、文章から化合物の特徴を捉えられることは分かったものの、それを実際の予測に使うところまでは進んでいませんでした。そこで、「テキストの知識を取り込みつつ、未知の化合物にも使えて、しかも解釈できる」表現が作れないか、と考えたのが本研究のきっかけです。
 
-## 2. 提案手法； Fp Doc2Vecについて
+## 3. 提案手法: Fp Doc2Vecについて
 
 通常のDoc2Vecでは、文書(ここでは化合物の説明文)ごとに「タグ」を付け、タグに対応する埋め込みを学習します。化合物名をタグにすれば、化合物ごとの埋め込みが得られます。しかし、この方法では学習に使っていない化合物の埋め込みは作れません。
 
-そこで **Fp Doc2Vec** では、化合物名の代わりに、その化合物が有する部分構造(ECFPのビット)をタグ**として使います。これにより、学習に使っていない分子でも含まれる部分構造の埋め込みを組み合わせて表現できるようになります。本研究では以下のようにして分子の埋め込み表現を作成しています。
+そこで **Fp Doc2Vec** では、化合物名の代わりに、その化合物が有する**部分構造(ECFPのビット)をタグ**として使います。これにより、学習に使っていない分子でも含まれる部分構造の埋め込みを組み合わせて表現できるようになります。本研究では以下の流れで化合物の埋め込み表現を作成しています。
 
 1. PubChemから化合物の説明文を取得する
 2. その化合物がもつ**部分構造をタグ**にして、Doc2Vecで学習する(部分構造ごとの埋め込みを取得する)
@@ -62,7 +62,7 @@ published: false
 ![](/images/jcim_fpdoc2vec/fpdoc2vec.png)
 *図2:Fp Doc2Vec手法の概念図。 Reprinted with permission from [J. Chem. Inf. Model. 2026, DOI: 10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643). © 2026 American Chemical Society.*
 
-この手法の利点としては3点あると考えています。
+本手法の利点としては3点あると考えています。
 
 - **説明文がなくても、構造さえあれば埋め込みが作れる点**
  学習範囲外の化合物でも、含まれる部分構造の埋め込みを足し合わせれば表現することができます。予測時にテキストは不要です。
@@ -73,32 +73,24 @@ published: false
 - **実装がシンプルな点**
  Doc2Vecの学習はライブラリ(gensimなど)を使えば数行のコードで書けます。ハイパーパラメータも少ないため、手軽に再現・応用できます。
 
-## 3. 結果
+## 4. 結果
 
-結果では、3つの観点で評価を行いました。
+本研究の主な結果として、**① 未知の化合物への予測性能**と、**② SHAPによる重要度解析**の2つを紹介します。この2つは、先ほど挙げた「外挿の問題」と「解釈性の問題」にそれぞれ対応しています。
 
-### 3-1. 未知の分子での予測性能
+### ① 学習に使っていない化合物に対する役割予測
 
-学習に使っていない393化合物を、説明文なしで**構造だけ**から予測しました。10種類の役割の平均F1スコアは、Fp Doc2Vecが最も高く、化学記述子(RDKit)とECFPを上回りました。役割ごとに見ると、毒素・香料・抗菌剤では化学記述子が上回りましたが、残りの7つの役割ではFp Doc2Vecが最も高いスコアでした。
+学習に使っていない化合物について、説明文を使わず**構造だけ**から、10種類の役割の分類予測を行いました。特徴量として、Fp Doc2Vecで得た埋め込み、ECFP、化学記述子(RDKit)の3種類を用意し、それぞれの予測性能を比較しました。
 
-| 特徴量 | 平均F1スコア |
-| --- | --- |
-| **Fp Doc2Vec** | **0.719** |
-| 化学記述子 | 0.698 |
-| ECFP | 0.631 |
+結果、10役割の平均F1スコアは、**Fp Doc2Vecが最も高く、化学記述子(RDKit)とECFPを上回りました。** 役割ごとに見ると、毒素・香料・抗菌剤では化学記述子が上回りましたが、残りの7つの役割ではFp Doc2Vecが最も高いF1スコアを示しました。
 
-また、説明文から「抗酸化剤」「染料」などの役割そのものを表す単語を取り除いても、Fp Doc2Vecのスコアはほとんど下がりませんでした(0.02の低下)。答えに近い単語に頼らず、**構造のパターンから**学習できていると考えています。
+### ② SHAPによる重要度解析
 
-### 3-2. 類似度評価
+予測の根拠を解釈するため、Fp Doc2VecとECFPのそれぞれについて、SHAPを用いて各部分構造が予測にどの程度寄与したのかを算出しました。さらに、その寄与の大きさを化合物の構造式上に色で示し、両者を比較しました。
 
-レスベラトロールに似た化合物を探して、埋め込みが何を捉えているかを調べました。その結果、Fp Doc2Vecは、構造が似た化合物を選ぶECFPと、説明文の文脈が似た化合物を選ぶName Doc2Vecの中間のような性質を示し、**構造とテキストの両方の情報が埋め込みに反映されている**ことが分かりました。
+結果、ケンフェロール(抗酸化剤)やニトロフラゾン(抗菌剤)では、FpDoc2vecの解釈のみが先行研究の知見[^2^3]と一致する傾向が確認できました。
 
-### 3-3. SHAPによる解釈
-
-予測の根拠をSHAPで調べ、部分構造の寄与を化合物の構造式に色付けしました。ケンフェロール(抗酸化剤)やニトロフラゾン(抗菌剤)では、過去の知見と一致する部位が重要と示され、ECFPよりも化学的に解釈しやすい結果が得られました。部分構造単位で埋め込みを作ることで、予測の根拠を化学的に確認できるようになりました。
-
-<!-- TODO: SHAPの図(論文Figure 8, 9)をここに挿入 -->
-<!-- *図3:SHAP値を構造式に反映した例(左:Fp Doc2Vec、右:ECFP)* -->
+![](/images/jcim_fpdoc2vec/shap.png)
+*図3:SHAP値を構造式(ニトロフラゾン)に反映した例(左:Fp Doc2Vec、右:ECFP)。 Reprinted with permission from [J. Chem. Inf. Model. 2026, DOI: 10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643). © 2026 American Chemical Society.*
 
 ## 4. 今後の展望
 
@@ -115,17 +107,20 @@ SHAPで得られた構造と役割の関係を、新しい化合物の設計に�
 
 最後まで読んでいただき、ありがとうございました。
 
-この研究は、「テキストの知識を、テキストのない化合物にも使えるようにする」というシンプルな問いから始まりました。コードとデータは公開していますので、ぜひ手元で試してみてください。ご意見やご質問もお待ちしています。
+この記事を読んで少しでも興味を持っていただいた方は、[本論文](https://doi.org/10.1021/acs.jcim.6c01643)も読んでいただけるとすごく嬉しいです。
+また、コードとデータは公開していますので、ぜひ手元で試してみてください。ご意見やご質問もお待ちしています。
 
-原著論文もぜひ読んでいただけると嬉しいです(引用していただけると、もっと嬉しいです)。
+松元さん、五東先生をはじめ、研究室の多くの方々の助言と支えがあったからこそ、このような形で論文を投稿することができました。本研究に関わってくださったみなさんに、この場を借りてお礼を申し上げます。
 
-これからもpoclabリサーチハイライトで、研究室の成果を発信していきます。引き続きよろしくお願いします!
+さらに、学会では、企業・大学を問わず、非常に多くの方々からアドバイスをいただきました。いただいた意見は大きな刺激になり、自分の視野を広げることにもつながりました。本当にありがとうございました。
+
+これからも[POCLabリサーチハイライト](https://zenn.dev/p/poclab_techblog/lists/wy2nxzk6sg)で、研究室の成果を発信していきます。引き続きよろしくお願いいたします。
 
 ## 本研究の原著論文
 
-- Matsumoto, Y.; **Koide, Y.**; Gotoh, H. "Predicting Chemical Roles from Database Descriptions Using Natural Language Processing" *J. Chem. Inf. Model.* **2026**. [https://doi.org/10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643)
+- Matsumoto, Y.; **Koide, Y.**; Gotoh, H. Predicting Chemical Roles from Database Descriptions Using Natural Language Processing *J. Chem. Inf. Model.* **2026**. [https://doi.org/10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643)
 
-## 参考文献
 
-[^1]: Matsumoto, Y.; Gotoh, H. "Compound Classification and Consideration of Correlation with Chemical Descriptors from Articles on Antioxidant Capacity Using Natural Language Processing" *J. Chem. Inf. Model.* **2024**, 64 (1), 119–127.
-[^2]: Li, J.; Qu, X.; Zhang, W.; Zhong, S. "Collision-free Morgan fingerprints: a principled approach to enhance machine learning performance and interpretability in chemistry" *J. Cheminf.* **2026**, 18 (1), 46.
+[^1]: Matsumoto, Y.; Gotoh, H. Compound Classification and Consideration of Correlation with Chemical Descriptors from Articles on Antioxidant Capacity Using Natural Language Processing. *J. Chem. Inf. Model.* **2024**, 64 (1), 119–127. [DOI: 10.1021/acs.jcim.3c01826](https://doi.org/10.1021/acs.jcim.3c01826)
+[^2]: Rice-Evans, C. A.; Miller, N. J.; Paganga, G. Structure-antioxidant activity relationships of flavonoids and phenolic acids. *Free Radical Biol. Med.* **1996**, 20 (7), 933–956. [DOI: 10.1016/0891-5849(95)02227-9](https://doi.org/10.1016/0891-5849(95)02227-9)
+[^3]: Dodd, M. C.; Cramer, D. L.; Ward, W. C. The relationship of structure and antibacterial activity in the nitrofurans. *J. Am. Pharm. Assoc. (Sci. Ed.)* **1950**, 39 (6), 313–318. [DOI: 10.1002/jps.3030390604](https://doi.org/10.1002/jps.3030390604)
