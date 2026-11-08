@@ -102,7 +102,7 @@ published: false
 最後まで読んでいただき、ありがとうございました。
 
 この記事を読んで少しでも興味を持っていただいた方は、[本論文](https://doi.org/10.1021/acs.jcim.6c01643)も読んでいただけるとすごく嬉しいです。
-また、コードとデータは公開していますので、ぜひ手元で試してみてください。ご意見やご質問もお待ちしています。
+コードとデータは公開していますので、ぜひ手元で試してみてください。ご意見やご質問もお待ちしています。
 
 松元さん、五東先生をはじめ、研究室の多くの方々の助言と支えがあったからこそ、このような形で論文を投稿することができました。本研究に関わってくださったみなさんに、この場を借りてお礼を申し上げます。
 
@@ -116,5 +116,7 @@ published: false
 
 
 [^1]: Matsumoto, Y.; Gotoh, H. Compound Classification and Consideration of Correlation with Chemical Descriptors from Articles on Antioxidant Capacity Using Natural Language Processing. *J. Chem. Inf. Model.* **2024**, 64 (1), 119–127. [DOI: 10.1021/acs.jcim.3c01826](https://doi.org/10.1021/acs.jcim.3c01826)
+
 [^2]: Rice-Evans, C. A.; Miller, N. J.; Paganga, G. Structure-antioxidant activity relationships of flavonoids and phenolic acids. *Free Radical Biol. Med.* **1996**, 20 (7), 933–956. [DOI: 10.1016/0891-5849(95)02227-9](https://doi.org/10.1016/0891-5849(95)02227-9)
+
 [^3]: Dodd, M. C.; Cramer, D. L.; Ward, W. C. The relationship of structure and antibacterial activity in the nitrofurans. *J. Am. Pharm. Assoc. (Sci. Ed.)* **1950**, 39 (6), 313–318. [DOI: 10.1002/jps.3030390604](https://doi.org/10.1002/jps.3030390604)
