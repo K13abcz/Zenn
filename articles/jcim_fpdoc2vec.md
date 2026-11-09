@@ -12,7 +12,7 @@ published: false
 
 [POCLabリサーチハイライト](https://zenn.dev/p/poclab_techblog/lists/wy2nxzk6sg)では、横浜国立大学 五東研究室[POCLab](https://poclab-web.github.io/homepage/)の研究成果を紹介しています。
 
-今回の第3回目の記事では、Journal of Chemical Information and Modeling (JCIM)に掲載された、**化合物の説明文と部分構造を組み合わせて、化合物の「化学的な役割」を予測する**研究を紹介します。
+今回の第3回目の記事では、Journal of Chemical Information and Modeling (JCIM)に掲載された、**化合物の説明文と部分構造を組み合わせて、化合物の化学的な役割を予測する研究**を紹介します。
 
 ![](/images/jcim_fpdoc2vec/Graphical_Abstract.png)
 *図1:本研究の概要(Graphical Abstract) Reprinted with permission from [J. Chem. Inf. Model. 2026, DOI: 10.1021/acs.jcim.6c01643](https://doi.org/10.1021/acs.jcim.6c01643). © 2026 American Chemical Society.*
